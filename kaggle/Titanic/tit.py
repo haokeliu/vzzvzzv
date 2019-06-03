@@ -137,7 +137,8 @@ plt.xlabel("Passenger Class", fontsize = 15)
 ## Converting xticks into words for better understanding
 labels = ['Upper', 'Middle', 'Lower']
 plt.xticks(sorted(train.Pclass.unique()), labels);
-plt.show()
+print('train[train.Fare > 280]')
+
 
 
 
