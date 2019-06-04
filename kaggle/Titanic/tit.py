@@ -139,12 +139,18 @@ labels = ['Upper', 'Middle', 'Lower']
 plt.xticks(sorted(train.Pclass.unique()), labels);
 # print('train[train.Fare > 280]')
 #print(train.describe())
-print(train.describe(include =['O']))
-
-
-
-
-
+train.describe(include =['O'])
+train[['Pclass','Survived']].groupby('Pclass').mean().reset_index()
+survived_summary = train.groupby('Survived')
+survived_summary.mean().reset_index()
+survived_summary = train.groupby("Sex")
+survived_summary.mean().reset_index()
+survived_summary = train.groupby("Pclass")
+survived_summary.mean().reset_index()
+pd.DataFrame(abs(train.corr()['Survived']).sort_values(ascending = False))
+corr = train.corr()**2
+corr.Survived.sort_values(ascending=False)
+#HeatMap(热图)
 
 
 
