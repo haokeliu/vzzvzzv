@@ -150,14 +150,42 @@ survived_summary.mean().reset_index()
 pd.DataFrame(abs(train.corr()['Survived']).sort_values(ascending = False))
 corr = train.corr()**2
 corr.Survived.sort_values(ascending=False)
-#HeatMap(热图)
+mask = np.zeros_like(train.corr(), dtype=np.bool)
+#mask[np.triu_indices_from(mask)] = True
 
-
-
-
-
-
-
+plt.subplots(figsize = (15,12))
+sns.heatmap(train.corr(),
+            annot=True,
+            #mask = mask,
+            cmap = 'RdBu_r',
+            linewidths=0.1,
+            linecolor='white',
+            vmax = .9,
+            square=True)
+plt.title("Correlations Among Features", y = 1.03,fontsize = 20);
+# plt.show()
+male_mean = train[train['Sex'] == 1].Survived.mean()
+female_mean = train[train['Sex'] == 0].Survived.mean()
+# print ("Male survival mean: " + str(male_mean))
+# print ("female survival mean: " + str(female_mean))
+# print ("The mean difference between male and female survival rate: " + str(female_mean - male_mean))
+# separating male and female dataframe.
+male = train[train['Sex'] == 1]
+female = train[train['Sex'] == 0]
+# getting 50 random sample for male and female.
+import random
+male_sample = random.sample(list(male['Survived']),50)
+female_sample = random.sample(list(female['Survived']),50)
+# Taking a sample means of survival feature from male and female
+male_sample_mean = np.mean(male_sample)
+female_sample_mean = np.mean(female_sample)
+# Print them out
+# print ("Male sample mean: " + str(male_sample_mean))
+# print ("Female sample mean: " + str(female_sample_mean))
+# print ("Difference between male and female sample mean: " + str(female_sample_mean - male_sample_mean))
+import scipy.stats as stats
+# print (stats.ttest_ind(male_sample, female_sample))
+# print ("This is the p-value when we break it into standard form: " + format(stats.ttest_ind(male_sample, female_sample).pvalue, '.32f'))
 
 
 
